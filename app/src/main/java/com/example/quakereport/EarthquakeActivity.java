@@ -15,7 +15,7 @@ public class EarthquakeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.earthquake_activity);
+        setContentView(R.layout.earthquake_activity);
 
         //Lista de locais fakes
         ArrayList<String> earthquakes = new ArrayList<>();
