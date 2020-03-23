@@ -10,7 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquakes> {
 
@@ -39,13 +41,21 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquakes> {
         TextView useTextView;
         // Recebe o valor da magnitude e seta no TextView
         useTextView = listItemView.findViewById(R.id.magnitude);
-        useTextView.setText(currentEarthquakes.getMagnitude());
+        useTextView.setText(""+currentEarthquakes.getMagnitude());
         // Seta o nome da cidade
-        useTextView =  listItemView.findViewById(R.id.cityName);
+        // Seta a proximidade
+        useTextView =  listItemView.findViewById(R.id.nearby);
         useTextView.setText(currentEarthquakes.getLocation());
         // Seta a data
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String formattedDate =  simpleDateFormat.format(new Date(currentEarthquakes.getDate()));
         useTextView = listItemView.findViewById(R.id.date);
-        useTextView.setText(currentEarthquakes.getDate());
+        useTextView.setText(formattedDate);
+        // Seta a hora
+        simpleDateFormat = new SimpleDateFormat("HH:mm");
+        formattedDate = simpleDateFormat.format(new Date(currentEarthquakes.getDate()));
+        useTextView = listItemView.findViewById(R.id.time);
+        useTextView.setText(formattedDate);
         // Retorna a view pronta
         return listItemView;
     }

@@ -11,16 +11,16 @@
         android:layout_height="wrap_content"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/cityName"
+        app:layout_constraintEnd_toStartOf="@id/nearby"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/cityName"
+        android:id="@+id/nearby"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text=""
-        app:layout_constraintBottom_toTopOf="@id/placeName"
+        app:layout_constraintBottom_toTopOf="@id/cityName"
         app:layout_constraintEnd_toStartOf="@id/date"
         app:layout_constraintStart_toEndOf="@id/magnitude"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,28 +33,28 @@
         android:textAlignment="textEnd"
         app:layout_constraintBottom_toTopOf="@id/time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cityName"
+        app:layout_constraintStart_toEndOf="@id/nearby"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/placeName"
+        android:id="@+id/cityName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="teste"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/cityName"
+        app:layout_constraintEnd_toEndOf="@id/nearby"
         app:layout_constraintStart_toEndOf="@id/magnitude"
-        app:layout_constraintTop_toBottomOf="@id/cityName" />
+        app:layout_constraintTop_toBottomOf="@id/nearby" />
 
     <TextView
         android:id="@+id/time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="teste"
+        android:text=""
         android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/date"
-        app:layout_constraintStart_toEndOf="@id/placeName"
+        app:layout_constraintStart_toEndOf="@id/cityName"
         app:layout_constraintTop_toBottomOf="@id/date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,17 +1,17 @@
 package com.example.quakereport;
 
 public class Earthquakes {
-    private String magnitude;
+    private double magnitude;
     private String location;
-    private String date;
+    private long date;
 
-    public Earthquakes(String magnitude, String location, String date){
+    public Earthquakes(double magnitude, String location, long date) {
         this.magnitude = magnitude;
         this.location = location;
         this.date = date;
     }
 
-    public String getMagnitude() {
+    public double getMagnitude() {
         return magnitude;
     }
 
@@ -19,7 +19,7 @@ public class Earthquakes {
         return location;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 }

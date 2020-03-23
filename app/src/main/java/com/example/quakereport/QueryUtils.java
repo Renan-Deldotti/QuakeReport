@@ -42,12 +42,10 @@ public final class QueryUtils {
             //Faz a conversao dos elementos do array
             JSONObject responseJson = new JSONObject(SAMPLE_JSON_RESPONSE);
             JSONArray featuresArray = responseJson.getJSONArray("features");
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             for(int i = 0; i<featuresArray.length();i++){
                 responseJson = featuresArray.getJSONObject(i);
                 responseJson = responseJson.getJSONObject("properties");
-                String data = ""+simpleDateFormat.format(new Date(responseJson.getLong("time")));
-                arrayList.add(new Earthquakes(""+responseJson.getDouble("mag"),""+responseJson.getString("place"),""+data));
+                arrayList.add(new Earthquakes(responseJson.getDouble("mag"),responseJson.getString("place"),responseJson.getLong("time")));
             }
         } catch (JSONException e){
             //Lanca a excecao de erro
