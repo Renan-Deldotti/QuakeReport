@@ -1,6 +1,8 @@
 package com.example.quakereport;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -46,7 +49,9 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquakes> {
         // Recebe o valor da magnitude e seta no TextView
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         useTextView = listItemView.findViewById(R.id.magnitude);
-        useTextView.setText(""+decimalFormat.format(currentEarthquakes.getMagnitude()));
+        useTextView.setText(decimalFormat.format(currentEarthquakes.getMagnitude()));
+        // Muda a cor de fundo do icone de acordo com o grau do terremoto
+        changeBackgroundIconColor(useTextView,currentEarthquakes.getMagnitude());
         //Divide a String de getLocation
         String[] textToShow;
         if (currentEarthquakes.getLocation().contains(LOCATION_SEPARATOR)){
@@ -73,5 +78,42 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquakes> {
         useTextView.setText(formattedDate);
         // Retorna a view pronta
         return listItemView;
+    }
+    private void changeBackgroundIconColor(TextView view,Double d){
+        GradientDrawable gradientDrawable = (GradientDrawable) view.getBackground();
+        switch ((int) Math.floor(d)){
+        //switch ((int) Math.round(d)){
+            case 0:
+            case 1:
+                gradientDrawable.setColor(ContextCompat.getColor(getContext(),R.color.magnitude1));
+                break;
+            case 2:
+                gradientDrawable.setColor(ContextCompat.getColor(getContext(),R.color.magnitude2));
+                break;
+            case 3:
+                gradientDrawable.setColor(ContextCompat.getColor(getContext(),R.color.magnitude3));
+                break;
+            case 4:
+                gradientDrawable.setColor(ContextCompat.getColor(getContext(),R.color.magnitude4));
+                break;
+            case 5:
+                gradientDrawable.setColor(ContextCompat.getColor(getContext(),R.color.magnitude5));
+                break;
+            case 6:
+                gradientDrawable.setColor(ContextCompat.getColor(getContext(),R.color.magnitude6));
+                break;
+            case 7:
+                gradientDrawable.setColor(ContextCompat.getColor(getContext(),R.color.magnitude7));
+                break;
+            case 8:
+                gradientDrawable.setColor(ContextCompat.getColor(getContext(),R.color.magnitude8));
+                break;
+            case 9:
+                gradientDrawable.setColor(ContextCompat.getColor(getContext(),R.color.magnitude9));
+                break;
+            default:
+                gradientDrawable.setColor(ContextCompat.getColor(getContext(),R.color.magnitude10plus));
+                break;
+        }
     }
 }
