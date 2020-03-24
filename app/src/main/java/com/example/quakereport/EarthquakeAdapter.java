@@ -1,13 +1,17 @@
 package com.example.quakereport;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,7 +47,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquakes> {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.earthquake_list,parent,false);
         }
         // Pega o objeto (Earthquake) na posicao da lista
-        Earthquakes currentEarthquakes = getItem(position);
+        final Earthquakes currentEarthquakes = getItem(position);
         // Cria a variavel para receber os TextViews
         TextView useTextView;
         // Recebe o valor da magnitude e seta no TextView
