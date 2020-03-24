@@ -42,9 +42,11 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquakes> {
         // Recebe o valor da magnitude e seta no TextView
         useTextView = listItemView.findViewById(R.id.magnitude);
         useTextView.setText(""+currentEarthquakes.getMagnitude());
-        // Seta o nome da cidade
         // Seta a proximidade
         useTextView =  listItemView.findViewById(R.id.nearby);
+        useTextView.setText(currentEarthquakes.getLocation());
+        // Seta o nome da cidade
+        useTextView =  listItemView.findViewById(R.id.cityName);
         useTextView.setText(currentEarthquakes.getLocation());
         // Seta a data
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
