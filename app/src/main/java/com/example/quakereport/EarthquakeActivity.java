@@ -4,46 +4,64 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
-    public static final String LOG_TAG = EarthquakeActivity.class.getName();
+    final String urlString = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-01-21&endtime=2020-03-26&limit=100&minmagnitude=4&orderby=time";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
+        EarthquakeAsyncTask earthquakeAsyncTask = new EarthquakeAsyncTask();
+        earthquakeAsyncTask.execute(urlString);
+    }
 
-        // Lista de locais baseados no Json
-        ArrayList<Earthquakes> earthquakes = QueryUtils.extractEarthquakes();
+    private class EarthquakeAsyncTask extends AsyncTask<String,Void, List<Earthquakes>>{
 
-        // Pega a referencia ao ListView "list"
-        ListView earthquakeListView = findViewById(R.id.list);
+        @Override
+        protected List<Earthquakes> doInBackground(String... strings) {
+            // Checa se existe uma String para ser convertida em URL
+            if (strings.length <1 || strings[0] == null){
+                return null;
+            }
+            // Chama o metodo para pegar o JSON da url
+            ArrayList<Earthquakes> earthquakes = QueryUtils.extractEarthquakes(strings[0]);
+            return earthquakes;
+        }
 
-        // Cria o adapter para o ArrayList Earthquake
-        final EarthquakeAdapter adapter = new EarthquakeAdapter(this,earthquakes);
+        @Override
+        protected void onPostExecute(List<Earthquakes> earthquakes) {
+            // Pega a referencia ao ListView "list"
+            ListView earthquakeListView = findViewById(R.id.list);
+            // Cria o adapter para o ArrayList Earthquake
+            ArrayList<Earthquakes> earthquakesArrayList = (ArrayList<Earthquakes>) earthquakes;
+            final EarthquakeAdapter adapter = new EarthquakeAdapter(EarthquakeActivity.this,earthquakesArrayList);
+            // Adiciona o Adapter ao ListView
+            earthquakeListView.setAdapter(adapter);
 
-        // Adiciona o Adapter ao ListView
-        earthquakeListView.setAdapter(adapter);
-
-        earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(EarthquakeActivity.this,"Abrindo a noticia no navegador...",Toast.LENGTH_LONG).show();
-                Earthquakes currentEarthquakes = adapter.getItem(position);
+            earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(EarthquakeActivity.this,"Abrindo a noticia no navegador...",Toast.LENGTH_LONG).show();
+                    Earthquakes currentEarthquakes = adapter.getItem(position);
                 /*Uri uri = Uri.parse(currentEarthquakes.getUrl());
                 Intent intent = new Intent(Intent.ACTION_VIEW,uri);
                 startActivity(intent);*/
-                // Jeito mais pratico
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(currentEarthquakes.getUrl())));
-            }
-        });
+                    // Jeito mais pratico
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(currentEarthquakes.getUrl())));
+                }
+            });
+        }
     }
 }
