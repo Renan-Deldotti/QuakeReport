@@ -17,12 +17,11 @@ import java.util.List;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
-    final String urlString = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-01-21&endtime=2020-03-26&limit=100&minmagnitude=4&orderby=time";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
+        String urlString = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=100&minmagnitude=2&orderby=time";
         EarthquakeAsyncTask earthquakeAsyncTask = new EarthquakeAsyncTask();
         earthquakeAsyncTask.execute(urlString);
     }
@@ -36,7 +35,7 @@ public class EarthquakeActivity extends AppCompatActivity {
                 return null;
             }
             // Chama o metodo para pegar o JSON da url
-            ArrayList<Earthquakes> earthquakes = QueryUtils.extractEarthquakes(strings[0]);
+            List<Earthquakes> earthquakes = QueryUtils.extractEarthquakes(strings[0]);
             return earthquakes;
         }
 
