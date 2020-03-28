@@ -48,7 +48,7 @@ public class EarthquakeActivity extends AppCompatActivity {
             final EarthquakeAdapter adapter = new EarthquakeAdapter(EarthquakeActivity.this,earthquakesArrayList);
             // Adiciona o Adapter ao ListView
             earthquakeListView.setAdapter(adapter);
-
+            // Adiciona o ClickListener na lista
             earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
