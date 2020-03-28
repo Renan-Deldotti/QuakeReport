@@ -11,9 +11,16 @@ import java.util.List;
 
 class EarthquakeLoader extends AsyncTaskLoader<List<Earthquakes>> {
 
-    final String urlString = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=100&minmagnitude=2&orderby=time";
-    public EarthquakeLoader(@NonNull Context context) {
+    private String urlString;
+
+    public EarthquakeLoader(@NonNull Context context, String urlString) {
         super(context);
+        this.urlString = urlString;
+    }
+
+    @Override
+    protected void onStartLoading() {
+        forceLoad();
     }
 
     @Nullable
