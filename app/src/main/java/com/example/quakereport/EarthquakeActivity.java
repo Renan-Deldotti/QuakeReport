@@ -35,6 +35,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         ListView listView = findViewById(R.id.list);
         listView.setAdapter(earthquakeAdapter);
         LoaderManager loaderManager = getLoaderManager();
+        Log.e("Loader","initLoader was called.");
         loaderManager.initLoader(EARTHQUAKE_LOADER_ID,null, this);
         //EarthquakeAsyncTask earthquakeAsyncTask = new EarthquakeAsyncTask();
         //earthquakeAsyncTask.execute(urlString);
