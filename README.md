@@ -1,2 +1,2 @@
 # QuakeReport
- QuakeReport app from Udacity's course
+ QuakeReport app from Udacity course
