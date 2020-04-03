@@ -56,7 +56,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         emptyView.setText("No earthquake found.");
         earthquakeAdapter.clear();
         if (data != null && !data.isEmpty()){
-            //updateUi(data);
+            updateUi(data);
         }
     }
 
