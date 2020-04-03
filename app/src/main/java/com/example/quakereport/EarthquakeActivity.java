@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.URL;
@@ -33,6 +34,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         setContentView(R.layout.earthquake_activity);
         earthquakeAdapter = new EarthquakeAdapter(this,new ArrayList<Earthquakes>());
         ListView listView = findViewById(R.id.list);
+        listView.setEmptyView(findViewById(R.id.textViewEmpty));
         listView.setAdapter(earthquakeAdapter);
         LoaderManager loaderManager = getLoaderManager();
         Log.e("Loader","initLoader was called.");
@@ -50,9 +52,11 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onLoadFinished(Loader<List<Earthquakes>> loader, List<Earthquakes> data) {
         Log.e("Loader","Loader onLoadFinished was called.");
+        TextView emptyView = findViewById(R.id.textViewEmpty);
+        emptyView.setText("No earthquake found.");
         earthquakeAdapter.clear();
         if (data != null && !data.isEmpty()){
-            updateUi(data);
+            //updateUi(data);
         }
     }
 
