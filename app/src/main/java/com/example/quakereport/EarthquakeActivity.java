@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,8 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onLoadFinished(Loader<List<Earthquakes>> loader, List<Earthquakes> data) {
         Log.e("Loader","Loader onLoadFinished was called.");
+        ProgressBar progressBar = findViewById(R.id.progress_circular);
+        progressBar.setVisibility(View.GONE);
         TextView emptyView = findViewById(R.id.textViewEmpty);
         emptyView.setText("No earthquake found.");
         earthquakeAdapter.clear();

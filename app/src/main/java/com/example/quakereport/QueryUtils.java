@@ -31,6 +31,12 @@ public final class QueryUtils {
     private QueryUtils(){}
 
     static List<Earthquakes> extractEarthquakes(String stringUrl) {
+        /* Temporariamente desabilita a thread por 2.5s */
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // Cria a conexao com a Url
         URL url = createUrl(stringUrl);
 
