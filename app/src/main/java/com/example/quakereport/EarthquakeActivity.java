@@ -31,6 +31,8 @@ import java.util.List;
 public class EarthquakeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Earthquakes>> {
 
     private static final int EARTHQUAKE_LOADER_ID = 1;
+    // Close earthquakes
+    //private String urlString = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=100&minmagnitude=2&latitude=-15.807825&longitude=-48.049678&maxradius=30&orderby=time";
     private String urlString = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=100&minmagnitude=2&orderby=time";
     EarthquakeAdapter earthquakeAdapter;
     @Override
