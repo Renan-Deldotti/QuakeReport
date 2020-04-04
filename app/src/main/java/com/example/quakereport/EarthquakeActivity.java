@@ -72,12 +72,16 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
                 getString(R.string.settings_min_magnitude_key),
                 getString(R.string.settings_min_magnitude_default)
         );
+        String orderBy = sharedPreferences.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default)
+        );
         Uri uri = Uri.parse(urlString);
         Uri.Builder uriBuilder = uri.buildUpon();
         uriBuilder.appendQueryParameter("format","geojson")
                 .appendQueryParameter("limit","100")
                 .appendQueryParameter("minmagnitude",min_magnitude)
-                .appendQueryParameter("orderby","time");
+                .appendQueryParameter("orderby",orderBy);
         //Toast.makeText(this,"URI: "+uriBuilder.toString(),Toast.LENGTH_LONG).show();
         return new EarthquakeLoader(this,uriBuilder.toString());
     }

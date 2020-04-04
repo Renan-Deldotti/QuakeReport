@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -25,20 +26,31 @@ public class SettingsActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings_main);
             Preference minMag = findPreference(getString(R.string.settings_min_magnitude_key));
+            Preference orderBy = findPreference(getString(R.string.settings_order_by_key));
             bindPreferenceSummaryToValue(minMag);
+            bindPreferenceSummaryToValue(orderBy);
         }
 
-        private void bindPreferenceSummaryToValue(Preference minMag) {
-            minMag.setOnPreferenceChangeListener(this);
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(minMag.getContext());
-            String prefString = preferences.getString(minMag.getKey(),"");
-            onPreferenceChange(minMag,prefString);
+        private void bindPreferenceSummaryToValue(Preference p) {
+            p.setOnPreferenceChangeListener(this);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(p.getContext());
+            String prefString = preferences.getString(p.getKey(),"");
+            onPreferenceChange(p,prefString);
         }
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             //Toast.makeText(this, "Preference " + preference.toString() + "changed", Toast.LENGTH_LONG);
-            preference.setSummary(newValue.toString());
+            if (preference instanceof ListPreference){
+                ListPreference listPreference = (ListPreference) preference;
+                int prefIndex = listPreference.findIndexOfValue(newValue.toString());
+                if (prefIndex >= 0){
+                    CharSequence[] labels = listPreference.getEntries();
+                    preference.setSummary(labels[prefIndex]);
+                }
+            } else {
+                preference.setSummary(newValue.toString());
+            }
             return true;
         }
     }
