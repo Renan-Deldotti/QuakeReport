@@ -6,8 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.LoaderManager;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,11 +41,21 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         ListView listView = findViewById(R.id.list);
         listView.setEmptyView(findViewById(R.id.textViewEmpty));
         listView.setAdapter(earthquakeAdapter);
-        LoaderManager loaderManager = getLoaderManager();
-        Log.e("Loader","initLoader was called.");
-        loaderManager.initLoader(EARTHQUAKE_LOADER_ID,null, this);
-        //EarthquakeAsyncTask earthquakeAsyncTask = new EarthquakeAsyncTask();
-        //earthquakeAsyncTask.execute(urlString);
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
+        if (isConnected) {
+            LoaderManager loaderManager = getLoaderManager();
+            Log.e("Loader", "initLoader was called.");
+            loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);
+            //EarthquakeAsyncTask earthquakeAsyncTask = new EarthquakeAsyncTask();
+            //earthquakeAsyncTask.execute(urlString);
+        }else {
+            ProgressBar progressBar = findViewById(R.id.progress_circular);
+            progressBar.setVisibility(View.GONE);
+            TextView textView = findViewById(R.id.textViewEmpty);
+            textView.setText("NO INTERNET CONNECTION");
+        }
     }
 
     @Override
