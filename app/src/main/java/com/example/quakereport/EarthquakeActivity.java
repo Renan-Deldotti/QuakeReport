@@ -9,12 +9,14 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +37,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     private static final int EARTHQUAKE_LOADER_ID = 1;
     // Close earthquakes
     //private String urlString = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=100&minmagnitude=2&latitude=-15.807825&longitude=-48.049678&maxradius=30&orderby=time";
-    private String urlString = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=100&minmagnitude=2&orderby=time";
+    private static final String urlString = "https://earthquake.usgs.gov/fdsnws/event/1/query";
     EarthquakeAdapter earthquakeAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,19 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     @Override
     public Loader<List<Earthquakes>> onCreateLoader(int id, Bundle args) {
         Log.e("Loader","Loader onCreate was called.");
-        return new EarthquakeLoader(this,urlString);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String min_magnitude = sharedPreferences.getString(
+                getString(R.string.settings_min_magnitude_key),
+                getString(R.string.settings_min_magnitude_default)
+        );
+        Uri uri = Uri.parse(urlString);
+        Uri.Builder uriBuilder = uri.buildUpon();
+        uriBuilder.appendQueryParameter("format","geojson")
+                .appendQueryParameter("limit","100")
+                .appendQueryParameter("minmagnitude",min_magnitude)
+                .appendQueryParameter("orderby","time");
+        //Toast.makeText(this,"URI: "+uriBuilder.toString(),Toast.LENGTH_LONG).show();
+        return new EarthquakeLoader(this,uriBuilder.toString());
     }
 
     @Override
