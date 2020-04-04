@@ -7,6 +7,6 @@
         android:id="@+id/action_settings"
         android:title="@string/settings_menu_item"
         android:orderInCategory="1"
-        android:icon="@drawable/ic_filter"
+        android:icon="@drawable/ic_menu_black_24dp"
         app:showAsAction="ifRoom"/>
 </menu>
